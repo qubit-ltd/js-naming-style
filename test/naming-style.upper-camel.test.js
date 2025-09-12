@@ -55,4 +55,37 @@ describe('Test the NamingStyle.UPPER_CAMEL', () => {
     expect(UPPER_CAMEL.to(UPPER_CAMEL, 'Hello')).toBe('Hello');
     expect(UPPER_CAMEL.to(UPPER_UNDERSCORE, 'Hello')).toBe('HELLO');
   });
+
+  test('Test NamingStyle.UPPER_CAMEL.to(), XMLParser boundary (UPPER_SEQ→UPPER with lookahead=L)', () => {
+    expect(UPPER_CAMEL.to(LOWER_HYPHEN, 'XMLParser')).toBe('xml-parser');
+    expect(UPPER_CAMEL.to(LOWER_CAMEL, 'XMLParser')).toBe('xmlParser');
+    expect(UPPER_CAMEL.to(UPPER_UNDERSCORE, 'XMLParser')).toBe('XML_PARSER');
+  });
+
+  test('Test NamingStyle.UPPER_CAMEL.to(), OTHER char should not split', () => {
+    expect(UPPER_CAMEL.to(LOWER_HYPHEN, 'Hello$World')).toBe('hello$world');
+    expect(UPPER_CAMEL.to(LOWER_CAMEL, 'Hello$World')).toBe('hello$world');
+    expect(UPPER_CAMEL.to(UPPER_UNDERSCORE, 'Hello$World')).toBe('HELLO$WORLD');
+  });
+
+  test('Test NamingStyle.UPPER_CAMEL.to(), digit→UPPER boundary', () => {
+    expect(UPPER_CAMEL.to(LOWER_HYPHEN, 'A3DModel')).toBe('a-3-d-model');
+    expect(UPPER_CAMEL.to(LOWER_UNDERSCORE, 'A3DModel')).toBe('a_3_d_model');
+    expect(UPPER_CAMEL.to(LOWER_CAMEL, 'A3DModel')).toBe('a3DModel');
+    expect(UPPER_CAMEL.to(UPPER_UNDERSCORE, 'A3DModel')).toBe('A_3_D_MODEL');
+  });
+
+  test('UPPER→UPPER with lookahead=U should not split (ABCD)', () => {
+    expect(UPPER_CAMEL.to(LOWER_HYPHEN, 'ABCD')).toBe('abcd');
+    expect(UPPER_CAMEL.to(LOWER_UNDERSCORE, 'ABCD')).toBe('abcd');
+    expect(UPPER_CAMEL.to(LOWER_CAMEL, 'ABCD')).toBe('abcd');
+    expect(UPPER_CAMEL.to(UPPER_UNDERSCORE, 'ABCD')).toBe('ABCD');
+  });
+
+  test('DIGIT→OTHER should not split (A1$B)', () => {
+    expect(UPPER_CAMEL.to(LOWER_HYPHEN, 'A1$B')).toBe('a-1$b');
+    expect(UPPER_CAMEL.to(LOWER_UNDERSCORE, 'A1$B')).toBe('a_1$b');
+    expect(UPPER_CAMEL.to(LOWER_CAMEL, 'A1$B')).toBe('a1$b');
+    expect(UPPER_CAMEL.to(UPPER_UNDERSCORE, 'A1$B')).toBe('A_1$B');
+  });
 });
