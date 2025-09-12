@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 import firstCharOnlyToUpper from './impl/first-char-only-to-upper';
 import findFirst from './impl/find-first';
+import findFirstCamelCaseBoundary from './impl/find-first-camel-case-boundary';
 
 /**
  * A enumeration class that represents naming styles of identifiers.
@@ -82,10 +83,12 @@ class NamingStyle {
    */
   static LOWER_CAMEL = Object.freeze(new NamingStyle(
     'lower-camel',                  // name
-    (c) => (c >= 'A' && c <= 'Z'),  // wordBoundaryFilter
+    null,                           // wordBoundaryFilter (will use custom logic)
     '',                             // wordSeparator
     (w) => firstCharOnlyToUpper(w), // wordNormalizer
     (w) => w.toLowerCase(),         // firstWordNormalizer
+    undefined,                      // quickOptimizer
+    true,                           // useCamelCaseBoundary
   ));
 
   /**
@@ -93,9 +96,12 @@ class NamingStyle {
    */
   static UPPER_CAMEL = Object.freeze(new NamingStyle(
     'upper-camel',                  // name
-    (c) => (c >= 'A' && c <= 'Z'),  // wordBoundaryFilter
+    null,                           // wordBoundaryFilter (will use custom logic)
     '',                             // wordSeparator
     (w) => firstCharOnlyToUpper(w), // wordNormalizer
+    undefined,                      // firstWordNormalizer
+    undefined,                      // quickOptimizer
+    true,                           // useCamelCaseBoundary
   ));
 
   /**
@@ -187,14 +193,18 @@ class NamingStyle {
    *     The function that optimizes the conversion from this naming style to
    *     some special naming style. If this argument is `undefined`, then it is
    *     ignored.
+   * @param {Boolean|undefined} useCamelCaseBoundary
+   *     Whether to use CamelCase boundary detection logic. If true, uses
+   *     findFirstCamelCaseBoundary instead of wordBoundaryFilter.
    */
-  constructor(name, wordBoundaryFilter, wordSeparator, wordNormalizer, firstWordNormalizer, quickOptimizer) {
+  constructor(name, wordBoundaryFilter, wordSeparator, wordNormalizer, firstWordNormalizer, quickOptimizer, useCamelCaseBoundary) {
     this.name = name;
     this.wordBoundaryFilter = wordBoundaryFilter;
     this.wordSeparator = wordSeparator;
     this.wordNormalizer = wordNormalizer;
     this.firstWordNormalizer = firstWordNormalizer ?? wordNormalizer;
     this.quickOptimizer = quickOptimizer;
+    this.useCamelCaseBoundary = useCamelCaseBoundary ?? false;
   }
 
   /**
@@ -223,7 +233,13 @@ class NamingStyle {
     let result = '';
     let i = 0;
     let j = -1;
-    while ((j = findFirst(str, ++j, str.length, this.wordBoundaryFilter)) >= 0) {
+
+    // Use appropriate boundary finding logic
+    const findBoundary = this.useCamelCaseBoundary
+      ? (str, start, end) => findFirstCamelCaseBoundary(str, start, end)
+      : (str, start, end) => findFirst(str, start, end, this.wordBoundaryFilter);
+
+    while ((j = findBoundary(str, ++j, str.length)) >= 0) {
       if (i === j) continue;
       const word = str.substring(i, j);
       if (i === 0) {
