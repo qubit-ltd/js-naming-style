@@ -27,6 +27,9 @@
  * @private
  */
 function findFirst(str, startIndex, endIndex, filter) {
+  if (!str || !filter) {
+    return -1;
+  }
   for (let i = startIndex; i < endIndex; ++i) {
     if (filter(str.charAt(i))) {
       return i;
