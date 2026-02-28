@@ -19,11 +19,10 @@
  * @private
  */
 function firstCharOnlyToUpper(word) {
-  if (word.length === 0) {
+  if (!word || word.length === 0) {
     return word;
-  } else {
-    return word[0].toUpperCase() + word.substring(1).toLowerCase();
   }
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 }
 
 export default firstCharOnlyToUpper;
