@@ -24,16 +24,14 @@
  * @private
  */
 function isCamelCaseWordBoundary(str, index) {
-  if (index <= 0 || index >= str.length) {
+  if (!str || index <= 0 || index >= str.length) {
     return false;
   }
 
-  // Helper functions
   const isUpper = (c) => c >= 'A' && c <= 'Z';
   const isLower = (c) => c >= 'a' && c <= 'z';
   const isDigit = (c) => c >= '0' && c <= '9';
 
-  // Get character type
   const getCharType = (c) => {
     if (isUpper(c)) return 'U';
     if (isLower(c)) return 'L';
@@ -41,67 +39,33 @@ function isCamelCaseWordBoundary(str, index) {
     return 'OTHER';
   };
 
-  // Determine current state based on previous character
-  const getCurrentState = () => {
-    const prevChar = str.charAt(index - 1);
-    const prevType = getCharType(prevChar);
-
-    if (prevType === 'L') return 'LOWER';
-    if (prevType === 'D') return 'DIGIT';
-
-    if (prevType === 'U') {
-      // Check if we have consecutive uppercase letters
-      if (index >= 2) {
-        const prevPrevChar = str.charAt(index - 2);
-        if (isUpper(prevPrevChar)) {
-          return 'UPPER_SEQ';
-        }
-      }
-      return 'UPPER';
-    }
-
-    return 'START';
-  };
-
   const currentChar = str.charAt(index);
   const currentType = getCharType(currentChar);
-  const nextChar = index + 1 < str.length ? str.charAt(index + 1) : '';
-  const nextType = nextChar ? getCharType(nextChar) : '';
+  if (currentType === 'OTHER') {
+    return false;
+  }
 
-  const currentState = getCurrentState();
+  const prevChar = str.charAt(index - 1);
+  const prevType = getCharType(prevChar);
 
-  // State transition logic based on FSA
-  switch (currentState) {
-    case 'START':
-      return false;
-
-    case 'LOWER':
-      if (currentType === 'U') return true;
-      if (currentType === 'D') return true;
-      return false;
-
-    case 'UPPER':
-      if (currentType === 'L') return false;
-      if (currentType === 'D') return true;
-      if (currentType === 'U') {
-        if (nextType === 'L') return true;
+  switch (prevType) {
+    case 'L':
+      return currentType === 'U' || currentType === 'D';
+    case 'U': {
+      if (currentType === 'L') {
         return false;
       }
+      if (currentType === 'D') {
+        return true;
+      }
+      if (currentType === 'U') {
+        const nextChar = (index + 1 < str.length) ? str.charAt(index + 1) : '';
+        return isLower(nextChar);
+      }
       return false;
-
-    case 'UPPER_SEQ':
-      // 不在 L 处建边界；若当前 U 且下一字符是 L，则在当前 U 建边界
-      if (currentType === 'L') return false;
-      if (currentType === 'D') return true;
-      if (currentType === 'U') return nextType === 'L';
-      return false;
-
-    case 'DIGIT':
-      if (currentType === 'L') return false;
-      if (currentType === 'U') return true;
-      if (currentType === 'D') return false;
-      return false;
-
+    }
+    case 'D':
+      return currentType === 'U';
     default:
       return false;
   }
