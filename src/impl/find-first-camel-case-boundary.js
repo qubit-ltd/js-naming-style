@@ -25,6 +25,9 @@ import isCamelCaseWordBoundary from './is-camel-case-word-boundary.js';
  * @private
  */
 function findFirstCamelCaseBoundary(str, startIndex, endIndex) {
+  if (!str) {
+    return -1;
+  }
   for (let i = startIndex; i < endIndex; ++i) {
     if (isCamelCaseWordBoundary(str, i)) {
       return i;
