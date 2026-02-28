@@ -3,8 +3,8 @@
 [![npm package](https://img.shields.io/npm/v/@qubit-ltd/naming-style.svg)](https://npmjs.com/package/@qubit-ltd/naming-style)
 [![License](https://img.shields.io/badge/License-Apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![English Document](https://img.shields.io/badge/Document-English-blue.svg)](README.md)
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Haixing-Hu/js-naming-style/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/Haixing-Hu/js-naming-style/tree/master)
-[![Coverage Status](https://coveralls.io/repos/github/Haixing-Hu/js-naming-style/badge.svg?branch=master)](https://coveralls.io/github/Haixing-Hu/js-naming-style?branch=master)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/qubit-ltd/js-naming-style/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/qubit-ltd/js-naming-style/tree/master)
+[![Coverage Status](https://coveralls.io/repos/github/qubit-ltd/js-naming-style/badge.svg?branch=master)](https://coveralls.io/github/qubit-ltd/js-naming-style?branch=master)
 
 [naming-style] 是一个JavaScript库，用于转换标志符的命名风格。它支持多种编程语言的命名规范，
 包括Java、C++和Python，能够方便地在不同的大小写风格之间进行转换。这个库体积小巧，没有外部依赖，
@@ -350,4 +350,4 @@ app.get('/users/:user-id/items/:item-id', (req, res) => {
 [naming-style] 采用 Apache 2.0 许可证。详细信息请查阅 [LICENSE](LICENSE) 文件。
 
 [naming-style]: https://npmjs.com/package/@qubit-ltd/naming-style
-[GitHub 仓库]: https://github.com/Haixing-Hu/js-naming-style
+[GitHub 仓库]: https://github.com/qubit-ltd/js-naming-style

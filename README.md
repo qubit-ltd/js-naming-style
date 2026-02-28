@@ -3,8 +3,8 @@
 [![npm package](https://img.shields.io/npm/v/@qubit-ltd/naming-style.svg)](https://npmjs.com/package/@qubit-ltd/naming-style)
 [![License](https://img.shields.io/badge/License-Apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![中文文档](https://img.shields.io/badge/文档-中文版-blue.svg)](README.zh_CN.md)
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Haixing-Hu/js-naming-style/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/Haixing-Hu/js-naming-style/tree/master)
-[![Coverage Status](https://coveralls.io/repos/github/Haixing-Hu/js-naming-style/badge.svg?branch=master)](https://coveralls.io/github/Haixing-Hu/js-naming-style?branch=master)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/qubit-ltd/js-naming-style/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/qubit-ltd/js-naming-style/tree/master)
+[![Coverage Status](https://coveralls.io/repos/github/qubit-ltd/js-naming-style/badge.svg?branch=master)](https://coveralls.io/github/qubit-ltd/js-naming-style?branch=master)
 
 [naming-style] is a JavaScript library for converting the naming style of 
 identifiers. It supports various programming languages' naming conventions, 
@@ -356,4 +356,4 @@ Please ensure your code maintains 100% test coverage and passes all existing tes
 the [LICENSE](LICENSE) file.
 
 [naming-style]: https://npmjs.com/package/@qubit-ltd/naming-style
-[GitHub repository]: https://github.com/Haixing-Hu/js-naming-style
+[GitHub repository]: https://github.com/qubit-ltd/js-naming-style
